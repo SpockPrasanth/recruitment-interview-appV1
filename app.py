@@ -5,19 +5,32 @@ import streamlit as st
 # =====================================================
 
 st.set_page_config(
-    page_title="Data Engineering Interview Evaluation",
+    page_title=" Miracle Interview Evaluation Portal",
     layout="wide",
     page_icon="🚀"
 )
 
 # =====================================================
-# THEME TOGGLE
+# SIDEBAR
 # =====================================================
 
-theme = st.sidebar.toggle("🌙 Dark Mode", value=True)
+st.sidebar.title("⚙ Settings")
+
+selected_role = st.sidebar.selectbox(
+    "Select Interview Role",
+    [
+        "Data Engineer",
+        "BI Engineer"
+    ]
+)
+
+theme = st.sidebar.toggle(
+    "🌙 Dark Mode",
+    value=True
+)
 
 # =====================================================
-# COLORS BASED ON THEME
+# THEME COLORS
 # =====================================================
 
 if theme:
@@ -100,143 +113,122 @@ st.markdown(f"""
 # QUESTION BANK
 # =====================================================
 
-questions = [
+question_bank = {
 
-    {
-        "section": "Fundamentals",
-        "question": "What is ETL vs ELT?",
-        "good": "ETL transforms before load; ELT transforms after load (warehouse/lake).",
-        "red": "Cannot differentiate clearly."
-    },
+    "Data Engineer": [
 
-    {
-        "section": "Fundamentals",
-        "question": "What is a data pipeline?",
-        "good": "End-to-end flow: source, ingestion, transformation, storage.",
-        "red": "Very generic or unclear explanation."
-    },
+        {
+            "section": "Fundamentals",
+            "question": "What is ETL vs ELT?",
+            "good": "ETL transforms before load; ELT transforms after load.",
+            "red": "Cannot differentiate clearly."
+        },
 
-    {
-        "section": "Data Engineering",
-        "question": "What is partitioning and why is it used?",
-        "good": "Improves performance; reduces data scan; used in big data.",
-        "red": "No idea or vague explanation."
-    },
+        {
+            "section": "Fundamentals",
+            "question": "What is a data pipeline?",
+            "good": "End-to-end flow explanation.",
+            "red": "Very generic answer."
+        },
 
-    {
-        "section": "Data Engineering",
-        "question": "What is schema evolution?",
-        "good": "Handling changes in data structure over time.",
-        "red": "Cannot explain or no exposure."
-    },
+        {
+            "section": "ADF",
+            "question": "What is Azure Data Factory used for?",
+            "good": "Orchestration, pipelines, integration.",
+            "red": "Only calls it ETL tool."
+        },
 
-    {
-        "section": "ADF",
-        "question": "What is Azure Data Factory used for?",
-        "good": "Orchestration, data movement, pipelines, integration.",
-        "red": "Calls it only ETL tool without orchestration context."
-    },
+        {
+            "section": "PySpark",
+            "question": "What is PySpark?",
+            "good": "Distributed processing using Spark.",
+            "red": "Confuses with Python scripting."
+        },
 
-    {
-        "section": "ADF",
-        "question": "Difference between pipeline and data flow?",
-        "good": "Pipeline = orchestration; Data Flow = transformation logic.",
-        "red": "Confuses both."
-    },
+        {
+            "section": "Architecture",
+            "question": "Explain Medallion Architecture",
+            "good": "Bronze, Silver, Gold layers.",
+            "red": "Cannot explain layers."
+        },
 
-    {
-        "section": "ADF",
-        "question": "What are triggers in ADF?",
-        "good": "Schedule/event-based execution of pipelines.",
-        "red": "No idea or incorrect explanation."
-    },
+        {
+            "section": "Experience",
+            "question": "Explain one pipeline you built",
+            "good": "Clear architecture and transformations.",
+            "red": "Very generic explanation."
+        }
 
-    {
-        "section": "PySpark",
-        "question": "What is PySpark and where is it used?",
-        "good": "Distributed data processing using Spark; big data transformations.",
-        "red": "Confuses with Python scripting only."
-    },
+    ],
 
-    {
-        "section": "PySpark",
-        "question": "Difference between RDD, DataFrame, Dataset?",
-        "good": "DataFrame preferred; structured and optimized.",
-        "red": "No understanding of differences."
-    },
+    "BI Engineer": [
 
-    {
-        "section": "PySpark",
-        "question": "How do you optimize Spark jobs?",
-        "good": "Partitioning, caching, broadcast joins, avoiding shuffles.",
-        "red": "Generic answers without specifics."
-    },
+        {
+            "section": "Power BI",
+            "question": "What is the difference between Import and DirectQuery?",
+            "good": "Import stores data in model; DirectQuery queries source live.",
+            "red": "Cannot explain performance implications."
+        },
 
-    {
-        "section": "Architecture",
-        "question": "Explain Medallion Architecture",
-        "good": "Bronze raw, Silver cleaned, Gold curated.",
-        "red": "Cannot explain layers."
-    },
+        {
+            "section": "DAX",
+            "question": "What is CALCULATE in DAX?",
+            "good": "Modifies filter context.",
+            "red": "Cannot explain context transition."
+        },
 
-    {
-        "section": "Architecture",
-        "question": "What is a Lakehouse?",
-        "good": "Combines data lake + warehouse capabilities.",
-        "red": "No clarity or confusion."
-    },
+        {
+            "section": "DAX",
+            "question": "Difference between Measure and Calculated Column?",
+            "good": "Measure calculated dynamically; column stored physically.",
+            "red": "Confuses both."
+        },
 
-    {
-        "section": "Experience",
-        "question": "Explain one pipeline you built",
-        "good": "Clear flow with tools, transformations, challenges.",
-        "red": "Generic or unclear role."
-    },
+        {
+            "section": "Modeling",
+            "question": "What is Star Schema?",
+            "good": "Fact and dimension model for analytics.",
+            "red": "No modeling understanding."
+        },
 
-    {
-        "section": "Experience",
-        "question": "Biggest issue faced and resolution?",
-        "good": "Performance/data quality issue with clear solution.",
-        "red": "No real example."
-    },
+        {
+            "section": "Power Query",
+            "question": "What is Query Folding?",
+            "good": "Pushes transformations to source system.",
+            "red": "No understanding of optimization."
+        },
 
-    {
-        "section": "Behavioral",
-        "question": "Worked with different teams or stakeholders?",
-        "good": "Collaboration, communication, alignment.",
-        "red": "Blames others or unclear."
-    },
+        {
+            "section": "Visualization",
+            "question": "How do you optimize Power BI reports?",
+            "good": "Reduce visuals, optimize DAX, star schema, aggregations.",
+            "red": "Only talks about UI formatting."
+        },
 
-    {
-        "section": "Behavioral",
-        "question": "Handled production failure?",
-        "good": "Debugging, root cause analysis, fix.",
-        "red": "No ownership or vague."
-    },
+        {
+            "section": "Experience",
+            "question": "Explain a dashboard you built",
+            "good": "Business problem, KPIs, data sources, impact.",
+            "red": "Only talks about charts."
+        }
 
-    {
-        "section": "Timeline",
-        "question": "Walk through experience timeline",
-        "good": "Clear, consistent explanation.",
-        "red": "Gaps or inconsistencies."
-    },
+    ]
 
-    {
-        "section": "Timeline",
-        "question": "Any career gaps?",
-        "good": "Transparent explanation.",
-        "red": "Hidden or inconsistent answers."
-    }
+}
 
-]
+# =====================================================
+# ROLE QUESTIONS
+# =====================================================
+
+questions = question_bank[selected_role]
 
 # =====================================================
 # TITLE
 # =====================================================
 
-st.markdown("""
+st.markdown(f"""
 <div class="main-title">
-🚀 Data Engineering Interview Evaluation
+🚀 {selected_role} Interview Evaluation
 </div>
 """, unsafe_allow_html=True)
 
@@ -246,35 +238,21 @@ st.markdown("""
 
 h1, h2, h3, h4, h5 = st.columns([1.5, 3, 4, 4, 1])
 
-with h1:
-    st.markdown(
-        '<div class="header-box">Section</div>',
-        unsafe_allow_html=True
-    )
+headers = [
+    "Section",
+    "Question",
+    "Good Signals",
+    "Red Flags",
+    "Score"
+]
 
-with h2:
-    st.markdown(
-        '<div class="header-box">Question</div>',
-        unsafe_allow_html=True
-    )
+for col, header in zip([h1, h2, h3, h4, h5], headers):
 
-with h3:
-    st.markdown(
-        '<div class="header-box">Good Signals</div>',
-        unsafe_allow_html=True
-    )
-
-with h4:
-    st.markdown(
-        '<div class="header-box">Red Flags</div>',
-        unsafe_allow_html=True
-    )
-
-with h5:
-    st.markdown(
-        '<div class="header-box">Score</div>',
-        unsafe_allow_html=True
-    )
+    with col:
+        st.markdown(
+            f'<div class="header-box">{header}</div>',
+            unsafe_allow_html=True
+        )
 
 st.markdown("<br>", unsafe_allow_html=True)
 
@@ -353,23 +331,26 @@ for index, item in enumerate(questions):
             max_value=10,
             value=0,
             step=1,
-            key=f"score_{index}"
+            key=f"{selected_role}_score_{index}"
         )
 
     st.markdown("<br>", unsafe_allow_html=True)
 
 # =====================================================
-# FINAL SCORE
+# TOTAL SCORE
 # =====================================================
 
 total_score = 0
 
 for index in range(len(questions)):
-    total_score += st.session_state[f"score_{index}"]
+
+    total_score += st.session_state[
+        f"{selected_role}_score_{index}"
+    ]
 
 st.divider()
 
 st.metric(
-    label="⭐ Total Interview Score",
+    label=f"⭐ {selected_role} Interview Score",
     value=f"{total_score} / {len(questions) * 10}"
 )
