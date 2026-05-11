@@ -16,18 +16,33 @@ st.set_page_config(
 
 st.sidebar.title("⚙ Settings")
 
-selected_role = st.sidebar.selectbox(
+role_options = {
+    "🛠 Data Engineer": "Data Engineer",
+    "📊 BI Engineer": "BI Engineer",
+    "🏗 Architect": "Architect"
+}
+
+selected_display = st.sidebar.selectbox(
     "Select Interview Role",
-    [
-        "Data Engineer",
-        "BI Engineer"
-    ]
+    list(role_options.keys())
 )
+
+selected_role = role_options[selected_display]
 
 theme = st.sidebar.toggle(
     "🌙 Dark Mode",
     value=True
 )
+
+# =====================================================
+# ROLE ICONS
+# =====================================================
+
+role_icons = {
+    "Data Engineer": "🛠",
+    "BI Engineer": "📊",
+    "Architect": "🏗"
+}
 
 # =====================================================
 # THEME COLORS
@@ -85,6 +100,12 @@ st.markdown(f"""
     font-size: 42px;
     font-weight: 800;
     color: {text_color};
+    margin-bottom: 10px;
+}}
+
+.sub-title {{
+    font-size: 18px;
+    color: #94A3B8;
     margin-bottom: 30px;
 }}
 
@@ -115,6 +136,10 @@ st.markdown(f"""
 
 question_bank = {
 
+    # =================================================
+    # DATA ENGINEER
+    # =================================================
+
     "Data Engineer": [
 
         {
@@ -129,6 +154,13 @@ question_bank = {
             "question": "What is a data pipeline?",
             "good": "End-to-end flow explanation.",
             "red": "Very generic answer."
+        },
+
+        {
+            "section": "Data Engineering",
+            "question": "What is partitioning and why is it used?",
+            "good": "Improves performance and reduces data scan.",
+            "red": "No idea or vague explanation."
         },
 
         {
@@ -160,6 +192,10 @@ question_bank = {
         }
 
     ],
+
+    # =================================================
+    # BI ENGINEER
+    # =================================================
 
     "BI Engineer": [
 
@@ -212,6 +248,70 @@ question_bank = {
             "red": "Only talks about charts."
         }
 
+    ],
+
+    # =================================================
+    # ARCHITECT
+    # =================================================
+
+    "Architect": [
+
+        {
+            "section": "Architecture",
+            "question": "Design an end-to-end data platform for reporting",
+            "good": "Mentions ingestion, transformation, serving, governance.",
+            "red": "Only lists tools."
+        },
+
+        {
+            "section": "Architecture",
+            "question": "When would you NOT use Medallion architecture?",
+            "good": "Small datasets, real-time simplicity trade-offs.",
+            "red": "Says always use it."
+        },
+
+        {
+            "section": "Architecture",
+            "question": "How do you decide between batch vs streaming?",
+            "good": "Latency, cost, use-case decision.",
+            "red": "No criteria."
+        },
+
+        {
+            "section": "Cloud",
+            "question": "Compare Fabric, Databricks, Synapse",
+            "good": "Explains strengths and use cases.",
+            "red": "Only lists tools."
+        },
+
+        {
+            "section": "Orchestration",
+            "question": "How do you design resilient pipelines?",
+            "good": "Retries, monitoring, idempotency.",
+            "red": "No failure handling."
+        },
+
+        {
+            "section": "Modeling",
+            "question": "Difference between OLTP and OLAP?",
+            "good": "Transactional vs analytical.",
+            "red": "Cannot explain clearly."
+        },
+
+        {
+            "section": "Power BI",
+            "question": "How does Power BI fit into architecture?",
+            "good": "Consumes curated Gold layer.",
+            "red": "No integration clarity."
+        },
+
+        {
+            "section": "Experience",
+            "question": "Explain one architecture you designed",
+            "good": "Ownership, trade-offs, challenges.",
+            "red": "Very generic explanation."
+        }
+
     ]
 
 }
@@ -228,7 +328,13 @@ questions = question_bank[selected_role]
 
 st.markdown(f"""
 <div class="main-title">
-🚀 {selected_role} Interview Evaluation
+{role_icons[selected_role]} {selected_role} Miracle Interview Evaluation
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("""
+<div class="sub-title">
+Professional Interview Assessment Portal
 </div>
 """, unsafe_allow_html=True)
 
