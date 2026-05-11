@@ -1,9 +1,103 @@
 import streamlit as st
 
-st.set_page_config(layout="wide")
+# =====================================================
+# PAGE CONFIG
+# =====================================================
+
+st.set_page_config(
+    page_title="Data Engineering Interview Evaluation",
+    layout="wide",
+    page_icon="🚀"
+)
 
 # =====================================================
-# DATA ENGINEERING QUESTION BANK
+# THEME TOGGLE
+# =====================================================
+
+theme = st.sidebar.toggle("🌙 Dark Mode", value=True)
+
+# =====================================================
+# COLORS BASED ON THEME
+# =====================================================
+
+if theme:
+
+    # DARK MODE
+
+    bg_color = "#020817"
+    text_color = "white"
+
+    section_bg = "#1E293B"
+    question_bg = "#111827"
+
+    good_bg = "#052E16"
+    good_text = "#DCFCE7"
+
+    red_bg = "#450A0A"
+    red_text = "#FECACA"
+
+    header_bg = "#1D4ED8"
+
+else:
+
+    # LIGHT MODE
+
+    bg_color = "#F8FAFC"
+    text_color = "#111827"
+
+    section_bg = "#DBEAFE"
+    question_bg = "white"
+
+    good_bg = "#DCFCE7"
+    good_text = "#14532D"
+
+    red_bg = "#FEE2E2"
+    red_text = "#7F1D1D"
+
+    header_bg = "#2563EB"
+
+# =====================================================
+# GLOBAL CSS
+# =====================================================
+
+st.markdown(f"""
+<style>
+
+.stApp {{
+    background-color: {bg_color};
+    color: {text_color};
+}}
+
+.main-title {{
+    font-size: 42px;
+    font-weight: 800;
+    color: {text_color};
+    margin-bottom: 30px;
+}}
+
+.header-box {{
+    background: {header_bg};
+    color: white;
+    padding: 14px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+}}
+
+.card {{
+    padding: 18px;
+    border-radius: 12px;
+    min-height: 120px;
+    font-size: 16px;
+    box-shadow: 0px 2px 8px rgba(0,0,0,0.15);
+}}
+
+</style>
+""", unsafe_allow_html=True)
+
+# =====================================================
+# QUESTION BANK
 # =====================================================
 
 questions = [
@@ -140,7 +234,11 @@ questions = [
 # TITLE
 # =====================================================
 
-st.title("🚀 Data Engineering Interview Evaluation")
+st.markdown("""
+<div class="main-title">
+🚀 Data Engineering Interview Evaluation
+</div>
+""", unsafe_allow_html=True)
 
 # =====================================================
 # TABLE HEADER
@@ -149,24 +247,39 @@ st.title("🚀 Data Engineering Interview Evaluation")
 h1, h2, h3, h4, h5 = st.columns([1.5, 3, 4, 4, 1])
 
 with h1:
-    st.markdown("### Section")
+    st.markdown(
+        '<div class="header-box">Section</div>',
+        unsafe_allow_html=True
+    )
 
 with h2:
-    st.markdown("### Question")
+    st.markdown(
+        '<div class="header-box">Question</div>',
+        unsafe_allow_html=True
+    )
 
 with h3:
-    st.markdown("### Good Signals")
+    st.markdown(
+        '<div class="header-box">Good Signals</div>',
+        unsafe_allow_html=True
+    )
 
 with h4:
-    st.markdown("### Red Flags")
+    st.markdown(
+        '<div class="header-box">Red Flags</div>',
+        unsafe_allow_html=True
+    )
 
 with h5:
-    st.markdown("### Score")
+    st.markdown(
+        '<div class="header-box">Score</div>',
+        unsafe_allow_html=True
+    )
 
-st.divider()
+st.markdown("<br>", unsafe_allow_html=True)
 
 # =====================================================
-# QUESTIONS
+# QUESTIONS LOOP
 # =====================================================
 
 for index, item in enumerate(questions):
@@ -174,65 +287,89 @@ for index, item in enumerate(questions):
     col1, col2, col3, col4, col5 = st.columns([1.5, 3, 4, 4, 1])
 
     # SECTION
+
     with col1:
+
         st.markdown(f"""
-        <div style="
-            background:#EAF2FF;
-            padding:15px;
-            border-radius:8px;
-            font-weight:bold;
-            text-align:center;">
+        <div class="card"
+            style="
+            background:{section_bg};
+            color:{text_color};
+            text-align:center;
+            font-weight:bold;">
             {item['section']}
         </div>
         """, unsafe_allow_html=True)
 
     # QUESTION
+
     with col2:
+
         st.markdown(f"""
-        <div style="
-            background:white;
-            padding:15px;
-            border-radius:8px;
-            border-left:5px solid #0D5EA6;
-            min-height:120px;">
+        <div class="card"
+            style="
+            background:{question_bg};
+            color:{text_color};
+            border-left:6px solid #3B82F6;">
             <b>{item['question']}</b>
         </div>
         """, unsafe_allow_html=True)
 
     # GOOD SIGNALS
+
     with col3:
+
         st.markdown(f"""
-        <div style="
-            background:#F0FFF4;
-            padding:15px;
-            border-radius:8px;
-            border-left:5px solid green;
-            min-height:120px;">
+        <div class="card"
+            style="
+            background:{good_bg};
+            color:{good_text};
+            border-left:6px solid #22C55E;">
             {item['good']}
         </div>
         """, unsafe_allow_html=True)
 
     # RED FLAGS
+
     with col4:
+
         st.markdown(f"""
-        <div style="
-            background:#FFF5F5;
-            padding:15px;
-            border-radius:8px;
-            border-left:5px solid red;
-            min-height:120px;">
+        <div class="card"
+            style="
+            background:{red_bg};
+            color:{red_text};
+            border-left:6px solid #EF4444;">
             {item['red']}
         </div>
         """, unsafe_allow_html=True)
 
     # SCORE
+
     with col5:
+
         st.number_input(
             "",
             min_value=0,
             max_value=10,
             value=0,
+            step=1,
             key=f"score_{index}"
         )
 
-    st.divider()
+    st.markdown("<br>", unsafe_allow_html=True)
+
+# =====================================================
+# FINAL SCORE
+# =====================================================
+
+total_score = 0
+
+for index in range(len(questions)):
+    total_score += st.session_state[f"score_{index}"]
+
+st.divider()
+
+st.metric(
+    label="⭐ Total Interview Score",
+    value=f"{total_score} / {len(questions) * 10}"
+)
