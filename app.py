@@ -7,7 +7,7 @@ import streamlit as st
 st.set_page_config(
     page_title="Miracle Interview Evaluation Portal",
     layout="wide",
-    page_icon="🚀"
+    page_icon="Ⓜ️"
 )
 
 # =====================================================
@@ -50,8 +50,6 @@ role_icons = {
 
 if theme:
 
-    # DARK MODE
-
     bg_color = "#020817"
     text_color = "white"
 
@@ -67,8 +65,6 @@ if theme:
     header_bg = "#1D4ED8"
 
 else:
-
-    # LIGHT MODE
 
     bg_color = "#F8FAFC"
     text_color = "#111827"
@@ -97,34 +93,34 @@ st.markdown(f"""
 }}
 
 .main-title {{
-    font-size: 42px;
-    font-weight: 800;
+    font-size: 34px;
+    font-weight: 700;
     color: {text_color};
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }}
 
 .sub-title {{
-    font-size: 18px;
+    font-size: 16px;
     color: #94A3B8;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }}
 
 .header-box {{
     background: {header_bg};
     color: white;
-    padding: 14px;
-    border-radius: 10px;
+    padding: 12px;
+    border-radius: 8px;
     text-align: center;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 16px;
 }}
 
 .card {{
-    padding: 18px;
-    border-radius: 12px;
-    min-height: 120px;
-    font-size: 16px;
-    box-shadow: 0px 2px 8px rgba(0,0,0,0.15);
+    padding: 12px;
+    border-radius: 10px;
+    min-height: 90px;
+    font-size: 14px;
+    box-shadow: 0px 1px 5px rgba(0,0,0,0.12);
 }}
 
 </style>
@@ -164,10 +160,31 @@ question_bank = {
         },
 
         {
+            "section": "Data Engineering",
+            "question": "What is schema evolution?",
+            "good": "Handling changes in data structure over time.",
+            "red": "Cannot explain or no exposure."
+        },
+
+        {
             "section": "ADF",
             "question": "What is Azure Data Factory used for?",
-            "good": "Orchestration, pipelines, integration.",
+            "good": "Orchestration, data movement, pipelines.",
             "red": "Only calls it ETL tool."
+        },
+
+        {
+            "section": "ADF",
+            "question": "Difference between pipeline and data flow?",
+            "good": "Pipeline orchestrates; Data Flow transforms.",
+            "red": "Confuses both."
+        },
+
+        {
+            "section": "ADF",
+            "question": "What are triggers in ADF?",
+            "good": "Schedule/event-based execution.",
+            "red": "No idea."
         },
 
         {
@@ -175,6 +192,13 @@ question_bank = {
             "question": "What is PySpark?",
             "good": "Distributed processing using Spark.",
             "red": "Confuses with Python scripting."
+        },
+
+        {
+            "section": "PySpark",
+            "question": "Difference between RDD and DataFrame?",
+            "good": "DataFrames optimized and structured.",
+            "red": "No understanding."
         },
 
         {
@@ -201,51 +225,51 @@ question_bank = {
 
         {
             "section": "Power BI",
-            "question": "What is the difference between Import and DirectQuery?",
-            "good": "Import stores data in model; DirectQuery queries source live.",
-            "red": "Cannot explain performance implications."
+            "question": "Import vs DirectQuery?",
+            "good": "Import stores data; DirectQuery queries live.",
+            "red": "Cannot explain performance."
         },
 
         {
             "section": "DAX",
             "question": "What is CALCULATE in DAX?",
             "good": "Modifies filter context.",
-            "red": "Cannot explain context transition."
+            "red": "Cannot explain."
         },
 
         {
             "section": "DAX",
-            "question": "Difference between Measure and Calculated Column?",
-            "good": "Measure calculated dynamically; column stored physically.",
+            "question": "Measure vs Calculated Column?",
+            "good": "Measure dynamic; column stored physically.",
             "red": "Confuses both."
         },
 
         {
             "section": "Modeling",
             "question": "What is Star Schema?",
-            "good": "Fact and dimension model for analytics.",
-            "red": "No modeling understanding."
+            "good": "Fact and dimension model.",
+            "red": "No understanding."
         },
 
         {
             "section": "Power Query",
             "question": "What is Query Folding?",
-            "good": "Pushes transformations to source system.",
-            "red": "No understanding of optimization."
+            "good": "Pushes transformations to source.",
+            "red": "No optimization understanding."
         },
 
         {
             "section": "Visualization",
             "question": "How do you optimize Power BI reports?",
-            "good": "Reduce visuals, optimize DAX, star schema, aggregations.",
-            "red": "Only talks about UI formatting."
+            "good": "Optimize DAX and reduce visuals.",
+            "red": "Only talks UI."
         },
 
         {
             "section": "Experience",
             "question": "Explain a dashboard you built",
-            "good": "Business problem, KPIs, data sources, impact.",
-            "red": "Only talks about charts."
+            "good": "Business impact and KPIs.",
+            "red": "Only talks visuals."
         }
 
     ],
@@ -258,36 +282,36 @@ question_bank = {
 
         {
             "section": "Architecture",
-            "question": "Design an end-to-end data platform for reporting",
-            "good": "Mentions ingestion, transformation, serving, governance.",
+            "question": "Design end-to-end data platform",
+            "good": "Mentions ingestion, storage, governance.",
             "red": "Only lists tools."
         },
 
         {
             "section": "Architecture",
-            "question": "When would you NOT use Medallion architecture?",
-            "good": "Small datasets, real-time simplicity trade-offs.",
-            "red": "Says always use it."
+            "question": "When NOT to use Medallion?",
+            "good": "Small datasets and real-time trade-offs.",
+            "red": "Always use it."
         },
 
         {
             "section": "Architecture",
-            "question": "How do you decide between batch vs streaming?",
-            "good": "Latency, cost, use-case decision.",
+            "question": "Batch vs Streaming?",
+            "good": "Latency and use-case driven.",
             "red": "No criteria."
         },
 
         {
             "section": "Cloud",
             "question": "Compare Fabric, Databricks, Synapse",
-            "good": "Explains strengths and use cases.",
+            "good": "Explains use cases and strengths.",
             "red": "Only lists tools."
         },
 
         {
             "section": "Orchestration",
             "question": "How do you design resilient pipelines?",
-            "good": "Retries, monitoring, idempotency.",
+            "good": "Retries, logging, monitoring.",
             "red": "No failure handling."
         },
 
@@ -295,21 +319,21 @@ question_bank = {
             "section": "Modeling",
             "question": "Difference between OLTP and OLAP?",
             "good": "Transactional vs analytical.",
-            "red": "Cannot explain clearly."
+            "red": "Cannot explain."
         },
 
         {
             "section": "Power BI",
-            "question": "How does Power BI fit into architecture?",
+            "question": "How does Power BI fit architecture?",
             "good": "Consumes curated Gold layer.",
-            "red": "No integration clarity."
+            "red": "No clarity."
         },
 
         {
             "section": "Experience",
-            "question": "Explain one architecture you designed",
-            "good": "Ownership, trade-offs, challenges.",
-            "red": "Very generic explanation."
+            "question": "Explain one architecture designed",
+            "good": "Ownership and trade-offs.",
+            "red": "Generic explanation."
         }
 
     ]
@@ -342,7 +366,7 @@ Professional Interview Assessment Portal
 # TABLE HEADER
 # =====================================================
 
-h1, h2, h3, h4, h5 = st.columns([1.5, 3, 4, 4, 1])
+h1, h2, h3, h4, h5 = st.columns([1.2, 3, 4, 4, 1])
 
 headers = [
     "Section",
@@ -368,9 +392,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 
 for index, item in enumerate(questions):
 
-    col1, col2, col3, col4, col5 = st.columns([1.5, 3, 4, 4, 1])
-
-    # SECTION
+    col1, col2, col3, col4, col5 = st.columns([1.2, 3, 4, 4, 1])
 
     with col1:
 
@@ -385,8 +407,6 @@ for index, item in enumerate(questions):
         </div>
         """, unsafe_allow_html=True)
 
-    # QUESTION
-
     with col2:
 
         st.markdown(f"""
@@ -394,12 +414,10 @@ for index, item in enumerate(questions):
             style="
             background:{question_bg};
             color:{text_color};
-            border-left:6px solid #3B82F6;">
+            border-left:5px solid #3B82F6;">
             <b>{item['question']}</b>
         </div>
         """, unsafe_allow_html=True)
-
-    # GOOD SIGNALS
 
     with col3:
 
@@ -408,12 +426,10 @@ for index, item in enumerate(questions):
             style="
             background:{good_bg};
             color:{good_text};
-            border-left:6px solid #22C55E;">
+            border-left:5px solid #22C55E;">
             {item['good']}
         </div>
         """, unsafe_allow_html=True)
-
-    # RED FLAGS
 
     with col4:
 
@@ -422,12 +438,10 @@ for index, item in enumerate(questions):
             style="
             background:{red_bg};
             color:{red_text};
-            border-left:6px solid #EF4444;">
+            border-left:5px solid #EF4444;">
             {item['red']}
         </div>
         """, unsafe_allow_html=True)
-
-    # SCORE
 
     with col5:
 
@@ -454,9 +468,51 @@ for index in range(len(questions)):
         f"{selected_role}_score_{index}"
     ]
 
+max_score = len(questions) * 10
+
+percentage = round((total_score / max_score) * 100)
+
+# =====================================================
+# FINAL RESULT
+# =====================================================
+
+if percentage < 60:
+
+    result = "❌ Reject"
+
+elif percentage <= 80:
+
+    result = "🟡 Average Candidate"
+
+else:
+
+    result = "✅ Strong Candidate - Present to Data Team"
+
+# =====================================================
+# DISPLAY METRICS
+# =====================================================
+
 st.divider()
 
-st.metric(
-    label=f"⭐ {selected_role} Interview Score",
-    value=f"{total_score} / {len(questions) * 10}"
-)
+m1, m2, m3 = st.columns(3)
+
+with m1:
+
+    st.metric(
+        "⭐ Total Score",
+        f"{total_score} / {max_score}"
+    )
+
+with m2:
+
+    st.metric(
+        "📊 Percentage",
+        f"{percentage}%"
+    )
+
+with m3:
+
+    st.metric(
+        "🎯 Final Result",
+        result
+    )
