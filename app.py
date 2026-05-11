@@ -1,44 +1,26 @@
-# =====================================================
-# QUESTION DISPLAY
-# =====================================================
+import streamlit as st
+
+st.set_page_config(layout="wide")
 
 questions = [
 
     {
         "question": "What is ETL vs ELT?",
-        "good": "ETL transforms before load; ELT transforms after load (in warehouse/lake)",
+        "good": "ETL transforms before load; ELT transforms after load",
         "red": "Cannot differentiate clearly"
     },
 
     {
         "question": "What is a data pipeline?",
-        "good": "End-to-end flow: source, ingestion, transformation, storage",
-        "red": "Very generic or unclear explanation"
-    },
-
-    {
-        "question": "What is partitioning and why is it used?",
-        "good": "Improves performance; reduces data scan; used in big data",
-        "red": "No idea or vague explanation"
-    },
-
-    {
-        "question": "What is schema evolution?",
-        "good": "Handling changes in data structure over time",
-        "red": "Cannot explain or no exposure"
-    },
-
-    {
-        "question": "What is Azure Data Factory used for?",
-        "good": "Orchestration, data movement, pipelines, integration",
-        "red": "Calls it only ETL tool without orchestration context"
+        "good": "End-to-end data flow explanation",
+        "red": "Very generic answer"
     }
 
 ]
 
-# =====================================================
-# TABLE HEADER
-# =====================================================
+# ==========================================
+# HEADER
+# ==========================================
 
 header1, header2, header3, header4 = st.columns([3,4,4,1])
 
@@ -56,64 +38,27 @@ with header4:
 
 st.divider()
 
-# =====================================================
-# QUESTIONS LOOP
-# =====================================================
+# ==========================================
+# DATA ROWS
+# ==========================================
 
 for index, item in enumerate(questions):
 
     col1, col2, col3, col4 = st.columns([3,4,4,1])
 
-    # ==========================================
-    # QUESTION
-    # ==========================================
-
     with col1:
-
-        st.markdown(f"""
-        <div class="question-card">
-            <b>{item['question']}</b>
-        </div>
-        """, unsafe_allow_html=True)
-
-    # ==========================================
-    # GOOD SIGNALS
-    # ==========================================
+        st.info(item["question"])
 
     with col2:
-
-        st.markdown(f"""
-        <div class="question-card"
-             style="border-left:6px solid green;">
-            {item['good']}
-        </div>
-        """, unsafe_allow_html=True)
-
-    # ==========================================
-    # RED FLAGS
-    # ==========================================
+        st.success(item["good"])
 
     with col3:
-
-        st.markdown(f"""
-        <div class="question-card"
-             style="border-left:6px solid red;">
-            {item['red']}
-        </div>
-        """, unsafe_allow_html=True)
-
-    # ==========================================
-    # SCORE
-    # ==========================================
+        st.error(item["red"])
 
     with col4:
-
         st.number_input(
             "",
             min_value=0,
             max_value=10,
-            value=0,
-            key=f"score_{index}"
+            key=index
         )
-
-    st.divider()
